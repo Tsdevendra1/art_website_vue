@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <div id="home-video-container">
+        <div id="home-video-text-first">
+            <div id="home-video-text-second">
+                <video id="home-video" autoplay muted loop>
+                    <source src="{% static 'main/videos/testvideo.mp4' %}" type="video/mp4"/>
+                </video>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block document_ready_script %}
+    <script>
+        homePage();
+    </script>
+{% endblock %}
