@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block title %}
     Animations
@@ -6,12 +7,31 @@
 
 {% block content %}
 
-    <div class="container" id="app">
-        <div class="row">
-            <div class="col">
+    <div class="video-player-package video-player">
+        <video class="animation-video" controls>
+            <source class="animation-video-source" src="{% static 'main/videos/testvideo.mp4' %}" type="video/mp4"/>
+        </video>
+    </div>
 
+    <div id="app">
+        <div class="container mt-5">
+            <div class="row" style="float:right">
+                <i @click="closeButton" class="video-player-package close-button fas fa-times"></i>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% for project in project_list %}
+
+
+                        <animation-project class="project mr-5" project_title="{{ project.title }}"
+                                           image_path="{{ project.thumbnail.url }}"
+                                           description="{{ project.description }}"
+                        video_path="{{ project.video.url }}"></animation-project>
+                    {% endfor %}
+                </div>
             </div>
         </div>
+
     </div>
 
 {% endblock %}

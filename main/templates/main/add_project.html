@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Add Project
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 mb-5" id="app">
+        <h3><u>Add Project</u></h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'main/generic_form_template.html' with form=form %}
+            {% include 'main/generic_formset_template.html' with formset=image_formset show=1 have_is_valid=1 %}
+            {{ image_formset.management_form }}
+            <button @click="addPicture" type="button" class="btn btn-success">Add
+                Picture
+            </button>
+
+            <button v-if="pictureNum > 0" @click="removePicture" type="button" class="btn btn-danger">Remove
+                Picture
+            </button>
+
+            <button style="float:right;" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+{% block document_ready_script %}
+    <script>
+        addProjectPage();
+    </script>
+{% endblock %}

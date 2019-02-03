@@ -100,3 +100,80 @@ body {
     bottom: 0;
     left: 0;
 }
+
+.project-title {
+    padding-bottom: 10px;
+}
+
+.card-image {
+    transition: transform .2s; /* Animation */
+}
+
+.card-image:hover {
+    transform: scale(1.1);
+}
+
+.project-image {
+    overflow: hidden;
+}
+
+.project-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-link {
+    padding:0;
+    margin:0;
+    margin-left: 0px;
+}
+.card-link:hover {
+   color: orange;
+}
+
+.fa-folder-open {
+    color: orange;
+}
+
+.video-player:before {
+    content: '';
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+
+.animation-video {
+    position: absolute;
+    z-index: 999;
+    top: 30%;
+    right: 0;
+    bottom: 0;
+    left: 30%;
+}
+
+.close-button {
+    float: right;
+    margin-right: 20px;
+    color: white;
+    z-index: 999999999999999999999999999999;
+}
+
+.close-button:hover {
+    cursor: pointer;
+}
+
+.cursor-class {
+    cursor: pointer
+}
+
+.video-player-package {
+    display: none;
+}
+
+.project {
+    display: inline-block;
+}

@@ -5,5 +5,6 @@ from main import views as m_views
 
 urlpatterns = [
                   path('home/', m_views.HomePageView.as_view(), name='home'),
-                  path('animations/', m_views.WorkCollectionPageView.as_view(), name='work-collection'),
+                  path('animations/', m_views.AnimationListView.as_view(), name='work-collection'),
+                  path('project/add/', m_views.AddProjectView.as_view(), name='add-project'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

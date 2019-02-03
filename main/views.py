@@ -2,20 +2,56 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 import json
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, FormView, CreateView, ListView, UpdateView, DeleteView, DetailView
 
-
 # Create your views here.
+from main.forms import ImageFormset, ProjectForm
+from main.models import Project
+
+
 class HomePageView(TemplateView):
     template_name = 'main/home.html'
 
 
-class WorkCollectionPageView(TemplateView):
+class AnimationListView(ListView):
     """
     View for page which deals with all the films
     """
+    model = Project
     template_name = 'main/work_collection_page.html'
+
+
+class AddProjectView(CreateView):
+    template_name = 'main/add_project.html'
+    success_url = reverse_lazy('work-collection')
+
+    def get(self, request):
+        context = {'image_formset': ImageFormset, 'form': ProjectForm}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        # Forms
+        project_form = ProjectForm(request.POST, request.FILES)
+        image_formset = ImageFormset(request.POST, request.FILES)
+
+        if project_form.is_valid() and image_formset.is_valid():
+            project_instance = project_form.save(commit=False)
+            project_instance.save()
+            for form in image_formset:
+                # Only save if an image has been provided
+                if form.cleaned_data.get('picture'):
+                    image_instance = form.save(commit=False)
+                    image_instance.project = project_instance
+                    image_instance.save()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            context = {'image_formset': ImageFormset(self.request.POST), 'form': ProjectForm(self.request.POST)}
+            return render(self.request, self.template_name, context)
+
+
+class ProjectPageView(DetailView):
+    template_name = 'main/project_page.html'
