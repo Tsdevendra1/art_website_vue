@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-for-image">
+        <img class="animation-page-image" src="{{ object.thumbnail.url }}">
+        <div class="center-image-text">{{ object.title }}</div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col justify-content-center">
+                <h5 class="animation-page-header mt-5"><b>ANIMATION STILLS</b></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="masonry">
+            {% for image in object.image_set.all %}
+                <img class="masonry-brick" src="{{ image.picture.url }}">
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block document_ready_script %}
+    <script>
+        individualProjectPage();
+    </script>
+{% endblock %}

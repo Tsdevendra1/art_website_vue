@@ -5,7 +5,7 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 class Project(models.Model):
     title = models.CharField(max_length=256)
-    description = models.CharField(max_length=256)
+    description = models.TextField()
     thumbnail = models.ImageField(upload_to='main/images/', help_text='This will be the thumbnail for the project')
     video = models.FileField(upload_to='main/videos/', help_text='This is the main video for the project')
 

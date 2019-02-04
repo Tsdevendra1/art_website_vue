@@ -55,3 +55,4 @@ class AddProjectView(CreateView):
 
 class ProjectPageView(DetailView):
     template_name = 'main/project_page.html'
+    model = Project
