@@ -4,10 +4,13 @@
             <span id="nav-email">TomMargett@Gmail.com</span></a>
     </div>
     <nav id="main-nav">
-        <a class="{% if request.resolver_match.url_name == "home" %}active-nav{% endif %} nav-item" href="{% url 'home' %}">HOME</a>
-        <a class="{% if request.resolver_match.url_name == "work-collection" %}active-nav{% endif %} nav-item" href="{% url 'work-collection' %}">ANIMATIONS</a>
-        <a class="nav-item" href="#">EXHIBITIONS</a>
-        <a class="nav-item" href="#">SKETCHBOOKS & GIFS</a>
+        <a class="{% if request.resolver_match.url_name == "home" %}active-nav{% endif %} nav-item"
+           href="{% url 'home' %}">HOME</a>
+        <a class="{% if request.resolver_match.url_name == "work-collection" or request.resolver_match.url_name == "single-animation-page" %}active-nav{% endif %} nav-item"
+           href="{% url 'work-collection' %}">ANIMATIONS</a>
+        <a class="{% if request.resolver_match.url_name == "exhibitions" %}active-nav{% endif %} nav-item"
+           href="{% url 'exhibitions' %}">EXHIBITIONS</a>
+        <a class="nav-item" href="#">SKETCHBOOK</a>
         <a class="nav-item" href="#">TEACHING</a>
         <a class="nav-item" href="#">CONTACT</a>
     </nav>

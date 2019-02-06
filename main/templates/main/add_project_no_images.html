@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Add Project
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 mb-5" id="app">
+        <h3><u>Add Project</u></h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'main/generic_form_template.html' with form=form %}
+
+
+            <button style="float:right;" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+{% block document_ready_script %}
+    <script>
+    </script>
+{% endblock %}

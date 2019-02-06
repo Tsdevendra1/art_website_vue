@@ -12,6 +12,12 @@ from django.views.generic import TemplateView, FormView, CreateView, ListView, U
 from main.forms import ImageFormset, ProjectForm
 from main.models import Project
 
+# Project types
+GENERAL = 'General'
+SKETCHBOOK = 'Sketchbook'
+EXHIBITION = 'Exhibition'
+TEACHING = 'Teaching'
+
 
 class HomePageView(TemplateView):
     template_name = 'main/home.html'
@@ -53,6 +59,33 @@ class AddProjectView(CreateView):
             return render(self.request, self.template_name, context)
 
 
+class AddProjectNoImagesView(CreateView):
+    template_name = 'main/add_project_no_images.html'
+    success_url = reverse_lazy('work-collection')
+
+    def get(self, request):
+        context = {'form': ProjectForm}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        # Forms
+        project_form = ProjectForm(request.POST, request.FILES)
+
+        if project_form.is_valid():
+            project_instance = project_form.save(commit=False)
+            project_instance.save()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            context = {'form': ProjectForm(self.request.POST)}
+            return render(self.request, self.template_name, context)
+
+
 class ProjectPageView(DetailView):
     template_name = 'main/project_page.html'
     model = Project
+
+
+class ExhibitionPageView(ListView):
+    template_name = 'main/exhibitions_page.html'
+    context_object_name = 'project_list'
+    queryset = Project.objects.filter(project_type=GENERAL)

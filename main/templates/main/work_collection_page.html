@@ -9,21 +9,21 @@
 
 
     <div id="app">
-
+        <h5 class="animation-page-header mt-5" style="">Animations</h5>
         <div class="video-player-package video-player-background">
             <i @click="closeButton" class="video-player-package close-button fas fa-times"></i>
-            <video class="video-player-package video-player" controls>
+            <video height="360" width="640" class="video-player-package video-player" controls>
                 <source src="{% static 'main/videos/testvideo.mp4' %}" type="video/mp4">
             </video>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-3">
             <div class="work-collection">
                 {% for project in project_list %}
                     <animation-project class="project" project_title="{{ project.title }}"
                                        image_path="{{ project.thumbnail.url }}"
                                        images_page_url="{% url 'single-animation-page' pk=project.pk %}"
-                                       description="{{ project.description }}"
+                                       description="{{ project.description}}"
                                        video_path="{{ project.video.url }}"></animation-project>
                 {% endfor %}
 

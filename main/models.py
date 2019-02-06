@@ -4,10 +4,23 @@ from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Project(models.Model):
+    GENERAL = 'General'
+    SKETCHBOOK = 'Sketchbook'
+    EXHIBITION = 'Exhibition'
+    TEACHING = 'Teaching'
+    PROJECT_TYPES = (
+        (GENERAL, 'General'),
+        (SKETCHBOOK, 'Sketchbook'),
+        (EXHIBITION, 'Exhibition'),
+        (TEACHING, 'Teaching'),
+    )
     title = models.CharField(max_length=256)
-    description = models.TextField()
-    thumbnail = models.ImageField(upload_to='main/images/', help_text='This will be the thumbnail for the project')
-    video = models.FileField(upload_to='main/videos/', help_text='This is the main video for the project')
+    description = models.TextField(null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='main/images/thumbnails/', help_text='This will be the thumbnail for the project',
+                                  blank=True, null=True)
+    video = models.FileField(upload_to='main/videos/', help_text='This is the main video for the project', blank=True,
+                             null=True)
+    project_type = models.CharField(max_length=13, choices=PROJECT_TYPES, default=GENERAL)
 
     def __str__(self):
         return self.title
