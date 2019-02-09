@@ -135,14 +135,16 @@ body {
     -webkit-transition: height .5s;
     transition: height .5s;
     /*height: 430px;*/
+    /*float: none;*/
+    /*margin: 0 auto;*/
     height: 390px;
-    margin: 20px;
+    /*margin: 20px;*/
     text-align: left !important;
     transition: 0.3s;
 }
 
 .project-card:hover {
-    /*box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);*/
+    /*box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);*/
 }
 
 .card-link {
@@ -200,7 +202,7 @@ body {
 }
 
 .project {
-    display: inline-block;
+    /*display: inline-block;*/
     /*justify-content: space-around;*/
 }
 
@@ -432,4 +434,10 @@ html, body {
 
 .body-text-class {
     text-align: center;
+}
+
+
+.col-flex {
+    display: flex;
+    justify-content: center;
 }

@@ -13,23 +13,38 @@
         <div class="video-player-package video-player-background">
             <i @click="closeButton" class="video-player-package close-button fas fa-times"></i>
             <video height="360" width="640" class="video-player-package video-player" controls>
-                <source src="{% static 'main/videos/testvideo.mp4' %}" type="video/mp4">
+                <source src="" type="video/mp4">
             </video>
         </div>
 
         <div class="mt-3">
-            <div class="work-collection">
+            {#            <div class="work-collection">#}
+            {#                {% for project in project_list %}#}
+            {#                    <animation-project class="project" project_title="{{ project.title }}"#}
+            {#                                       image_path="{{ project.thumbnail.url }}"#}
+            {#                                       images_page_url="{% url 'single-animation-page' pk=project.pk %}"#}
+            {#                                       description="{{ project.description }}"#}
+            {#                                       video_path="{{ project.video.url }}"></animation-project>#}
+            {#                {% endfor %}#}
+            {##}
+            {#            </div>#}
+            <div class="container">
+
                 {% for project in project_list %}
-                    <animation-project class="project" project_title="{{ project.title }}"
+                    {% if forloop.first %}
+                        <div class="row mt-4">{% endif %}
+                <div class="col col-flex">
+                    <animation-project class="project"  project_title="{{ project.title }}"
                                        image_path="{{ project.thumbnail.url }}"
                                        images_page_url="{% url 'single-animation-page' pk=project.pk %}"
-                                       description="{{ project.description}}"
+                                       description="{{ project.description }}"
                                        video_path="{{ project.video.url }}"></animation-project>
+                </div>
+                {% if forloop.counter|divisibleby:2 %}</div>
+                    <div class="row mt-5">{% endif %}
+                {% if forloop.last %}</div>{% endif %}
                 {% endfor %}
-
             </div>
-
-
         </div>
     </div>
 
