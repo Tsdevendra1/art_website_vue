@@ -85,7 +85,15 @@ class ProjectPageView(DetailView):
     model = Project
 
 
-class ExhibitionPageView(ListView):
-    template_name = 'main/exhibitions_page.html'
+class ExhibitionsListView(ListView):
+    template_name = 'main/all_exhibitions_page.html'
     context_object_name = 'project_list'
     queryset = Project.objects.filter(project_type=GENERAL)
+
+
+class ExhibitionPageView(DetailView):
+    template_name = 'main/exhibition_page_2.html'
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(project_type=GENERAL)

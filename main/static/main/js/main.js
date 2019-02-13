@@ -1,3 +1,5 @@
+"use strict";
+
 function homePage() {
     let homeVideo = document.getElementById('home-video');
     homeVideo.play();
@@ -22,25 +24,6 @@ function workPage() {
             }
         },
         mounted: function () {
-            // let growDiv = this.$el;
-            // let wrapper = this.$el.querySelector('.measuring-wrapper');
-            //
-            // // Save the original heights
-            // this.originalMainHeight = growDiv.offsetHeight;
-            // this.originalWrapperHeight = wrapper.clientHeight;
-            // this.originalTextHeight = this.$el.querySelector('.card-text').clientHeight;
-            //
-            // // This sets whether the read more button is shown
-            // let text = this.$el.querySelector('.description-text');
-            // this.readMore = text.clientHeight > (wrapper.clientHeight + 5);
-            //
-            //
-            // // You have to set the height the first time for some reason in javascript
-            // let growHeightString = this.originalMainHeight + "px";
-            // let wrapperHeightString = this.originalWrapperHeight + "px";
-            // growDiv.style.height = growHeightString;
-            // wrapper.style.height = wrapperHeightString;
-
         },
         methods: {
             showMore: function (event) {
@@ -78,7 +61,6 @@ function workPage() {
                     element.style.display = 'inline';
                 }
 
-
                 // Play video
                 let video = document.getElementsByClassName('video-player')[0];
                 video.src = this.video_path;
@@ -96,20 +78,11 @@ function workPage() {
         },
         // language=HTML
         template: `
-
             <div class="card project-card">
-                <div class="card-body project-title">
-                    <h5 class=""><b>{{ project_title }}</b></h5>
-                    <!--<i class="far fa-folder-open"></i>&nbsp <a v-if="images_page_url" :href="images_page_url" class="card-link">Animation-->
-                    <!--Stills</a>,-->
-                    <!--<a-->
-                            <!--style="margin-left:0px;" href="#"-->
-                            <!--class="card-link">Behind The Scenes-->
-                    <!--</a>-->
-                </div>
                 <div @click="showVideo" class="cursor-class project-image">
                     <div class="container-for-image">
-                        <img width="484" height="270" style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
+                        <img width="484" height="270"
+                             style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
                              class="card-img-top card-image" :src="image_path" alt="Card image cap">
                         <div @mouseover="scalePicture" @mouseleave="originalPicture" class="center-image-text-small">
                             <!--<b class="uppercase">{{ project_title }}</b>-->
@@ -117,8 +90,18 @@ function workPage() {
                         </div>
                     </div>
                 </div>
+                <div class="card-body project-title">
+                    <h5 class=""><b>{{ project_title }}</b></h5>
+                    <!--<i class="far fa-folder-open"></i>&nbsp <a v-if="images_page_url" :href="images_page_url" class="card-link">Animation-->
+                    <!--Stills</a>,-->
+                    <!--<a-->
+                    <!--style="margin-left:0px;" href="#"-->
+                    <!--class="card-link">Behind The Scenes-->
+                    <!--</a>-->
+                </div>
                 <div class="card-body body-text-class">
-                    <i class="far fa-folder-open"></i>&nbsp <a v-if="images_page_url" :href="images_page_url" class="card-link">Animation
+                    <i class="far fa-folder-open"></i>&nbsp <a v-if="images_page_url" :href="images_page_url"
+                                                               class="card-link">Animation
                     Stills</a>,
                     <a
                             style="margin-left:0px;" href="#"
@@ -126,9 +109,9 @@ function workPage() {
                     </a>
                     <!--<h5 class="card-title"><b>{{ project_title }}</b></h5>-->
                     <!--<div class="measuring-wrapper">-->
-                        <!--<div class="text description-text">-->
-                            <!--<p class="card-text">{{ description }}</p>-->
-                        <!--</div>-->
+                    <!--<div class="text description-text">-->
+                    <!--<p class="card-text">{{ description }}</p>-->
+                    <!--</div>-->
                     <!--</div>-->
                     <!--<input v-if="this.readMore" type="button" @click="showMore" value="Read more" class="more-button">-->
                 </div>
@@ -206,7 +189,35 @@ function addProjectPage() {
 function individualProjectPage() {
 }
 
-function exhibitionPage() {
+function exhibitionsPage() {
+    Vue.component('exhibition-post', {
+        props: ['month', 'year', 'exhibition_title', 'thumbnail_image_path', 'individual_post_url'],
+        data: function () {
+            return {
+                monthShort: this.month.slice(0, 3)
+            }
+        },
+        mounted: function () {
+        },
+        methods: {},
+        // language=HTML
+        template: `
+            <a :href="individual_post_url">
+                <div class="card exhibition-card" style="border-width: 2px;">
+                    <img width="484" height="230"
+                         style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
+                         class="card-img-top" :src="thumbnail_image_path" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="exhibition-title"><b>{{ exhibition_title }}</b></h5>
+                    </div>
+                    <div class="exhibition-footer">
+                        By <span class="color-orange">Tom Margett</span> <b>&middot;</b> <span
+                            style="color: lightgrey">{{ this.monthShort }} {{ year }}</span>
+                    </div>
+                </div>
+            </a>
+        `
+    });
     new Vue({
         el: '#app',
         data: function () {
@@ -214,4 +225,34 @@ function exhibitionPage() {
         },
         methods: {},
     })
+}
+
+function individualExhibitionPage() {
+    new Vue({
+        el: '#app',
+        mounted: function () {
+
+        },
+        methods: {
+            asyncImage: function () {
+                'use strict';
+                // Page is loaded
+                const objects = document.getElementsByClassName('async-image');
+
+                Array.from(objects).map((item) => {
+                    // Start loading image
+                    const img = new Image();
+                    img.src = item.dataset.src;
+                    // Once image is loaded replace the src of the HTML element
+                    img.onload = () => {
+                        item.classList.remove('asyncImage');
+                        return item.nodeName === 'IMG' ?
+                            item.src = item.dataset.src :
+                            item.style.backgroundImage = `url(${item.dataset.src})`;
+                    };
+                });
+            }
+        }
+    });
+
 }

@@ -21,6 +21,7 @@ class Project(models.Model):
     video = models.FileField(upload_to='main/videos/', help_text='This is the main video for the project', blank=True,
                              null=True)
     project_type = models.CharField(max_length=13, choices=PROJECT_TYPES, default=GENERAL)
+    date_field = models.DateField()
 
     def __str__(self):
         return self.title

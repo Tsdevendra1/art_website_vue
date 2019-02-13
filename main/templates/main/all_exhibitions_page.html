@@ -1,9 +1,47 @@
 {% extends 'main/base.html' %}
 
+{% block title %}
+    Exhibitions
+{% endblock %}
+
+{% block custom_style %}
+    <style>
+        html, body {
+            height: 100%;
+            {#background: #e9e9e9;#}
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 
+    <div id="app">
+        {#        <h5 class="animation-page-header mt-5" style="">Exhibitions</h5>#}
+
+        <div class="mt-5 mb-5">
+            <div class="container">
+
+                {% for project in project_list %}
+                    {% if forloop.first %}
+                        <div class="row mt-4" style="justify-content: flex-start;">{% endif %}
+                <div class="col col-flex-left">
+                    <exhibition-post class="exhibition" exhibition_title="{{ project.title }}"
+                                     month="{{ project.date_field|date:'F' }}"
+                                     year="{{ project.date_field|date:'Y' }}"
+                                     individual_post_url="{% url 'single-exhibition-page' pk=project.pk %}"
+                                     thumbnail_image_path="{{ project.thumbnail.url }}"></exhibition-post>
+                </div>
+                {% if forloop.counter|divisibleby:3 %}</div>
+                    <div class="row mt-5">{% endif %}
+                {% if forloop.last %}</div>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block document_ready_script %}
-
+    <script>
+        exhibitionsPage();
+    </script>
 {% endblock %}

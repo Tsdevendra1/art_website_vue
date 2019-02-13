@@ -2,13 +2,19 @@
     <div class="mini-nav">
         <a href="#"><i class="far fa-envelope"></i>
             <span id="nav-email">TomMargett@Gmail.com</span></a>
+        <div style="float: right;" class="mr-3">
+            <a href="#"><i class="nav-social-icon fab fa-twitter"></i></a>
+            <a href="#"><i class="nav-social-icon fab fa-facebook"></i></a>
+            <a href="#"><i class="nav-social-icon fab fa-instagram"></i></a>
+            <a href="#"><i class="nav-social-icon fab fa-linkedin"></i></a>
+        </div>
     </div>
     <nav id="main-nav">
         <a class="{% if request.resolver_match.url_name == "home" %}active-nav{% endif %} nav-item"
            href="{% url 'home' %}">HOME</a>
         <a class="{% if request.resolver_match.url_name == "work-collection" or request.resolver_match.url_name == "single-animation-page" %}active-nav{% endif %} nav-item"
            href="{% url 'work-collection' %}">ANIMATIONS</a>
-        <a class="{% if request.resolver_match.url_name == "exhibitions" %}active-nav{% endif %} nav-item"
+        <a class="{% if request.resolver_match.url_name == "exhibitions" or request.resolver_match.url_name == "single-exhibition-page" %}active-nav{% endif %} nav-item"
            href="{% url 'exhibitions' %}">EXHIBITIONS</a>
         <a class="nav-item" href="#">SKETCHBOOK</a>
         <a class="nav-item" href="#">TEACHING</a>
