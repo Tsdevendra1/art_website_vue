@@ -28,7 +28,7 @@ class AnimationListView(ListView):
     View for page which deals with all the films
     """
     model = Project
-    template_name = 'main/work_collection_page.html'
+    template_name = 'main/all_animations_page.html'
 
 
 class AddProjectView(CreateView):
@@ -81,7 +81,7 @@ class AddProjectNoImagesView(CreateView):
 
 
 class ProjectPageView(DetailView):
-    template_name = 'main/project_page.html'
+    template_name = 'main/generic_content_page.html'
     model = Project
 
 
@@ -92,7 +92,7 @@ class ExhibitionsListView(ListView):
 
 
 class ExhibitionPageView(DetailView):
-    template_name = 'main/exhibition_page_2.html'
+    template_name = 'main/generic_content_page.html'
     model = Project
 
     def get_queryset(self):

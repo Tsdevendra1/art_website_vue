@@ -8,11 +8,11 @@
 {% block content %}
 
 
-    <div id="app">
+    <div style="margin-top: 220px;" class="standard-position" id="app">
 {#        <h5 class="animation-page-header mt-5" style="">Animations</h5>#}
         <div class="video-player-package video-player-background">
             <i @click="closeButton" class="video-player-package close-button fas fa-times"></i>
-            <video height="360" width="640" class="video-player-package video-player" controls>
+            <video height="360" width="640" class="video-player-package video-player" autoplay controls>
                 <source src="" type="video/mp4">
             </video>
         </div>
@@ -31,7 +31,7 @@
                                        video_path="{{ project.video.url }}"></animation-project>
                 </div>
                 {% if forloop.counter|divisibleby:2 %}</div>
-                    <div class="row mt-5">{% endif %}
+                    <div class="row" style="margin-top: 115px;">{% endif %}
                 {% if forloop.last %}</div>{% endif %}
                 {% endfor %}
             </div>

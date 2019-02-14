@@ -7,7 +7,7 @@ from main.models import Image, Project
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'thumbnail', 'description', 'video', 'project_type', 'date_field']
+        fields = ['title', 'thumbnail', 'description', 'video', 'project_type', 'date_field', 'banner']
 
 
 class ImageForm(forms.ModelForm):

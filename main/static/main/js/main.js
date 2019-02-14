@@ -203,7 +203,7 @@ function exhibitionsPage() {
         // language=HTML
         template: `
             <a :href="individual_post_url">
-                <div class="card exhibition-card" style="border-width: 2px;">
+                <div class="card exhibition-card">
                     <img width="484" height="230"
                          style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
                          class="card-img-top" :src="thumbnail_image_path" alt="Card image cap">
@@ -227,32 +227,41 @@ function exhibitionsPage() {
     })
 }
 
-function individualExhibitionPage() {
+
+function genericContentPage() {
     new Vue({
         el: '#app',
-        mounted: function () {
-
+        data: function () {
+            return {}
         },
         methods: {
-            asyncImage: function () {
-                'use strict';
-                // Page is loaded
-                const objects = document.getElementsByClassName('async-image');
+            showImage: function (event) {
+                let imageViewer = document.getElementsByClassName('image-viewer')[0];
+                let imageViewerItems = document.getElementsByClassName('image-viewer-package');
 
-                Array.from(objects).map((item) => {
-                    // Start loading image
-                    const img = new Image();
-                    img.src = item.dataset.src;
-                    // Once image is loaded replace the src of the HTML element
-                    img.onload = () => {
-                        item.classList.remove('asyncImage');
-                        return item.nodeName === 'IMG' ?
-                            item.src = item.dataset.src :
-                            item.style.backgroundImage = `url(${item.dataset.src})`;
-                    };
-                });
-            }
+                // First show items
+                for (let item of imageViewerItems) {
+                    item.style.display = 'inline';
+                }
+
+                // Set the src for the image
+                imageViewer.src = event.target.src;
+
+            },
+            closeButton: function () {
+                let imageViewerItems = document.getElementsByClassName('image-viewer-package');
+                for (let item of imageViewerItems){
+                    item.style.display = 'none';
+                }
+                let imageViewer = document.getElementsByClassName('image-viewer')[0];
+                imageViewer.src = "";
+            },
+            leftArrow: function (){
+
+            },
+            rightArrow: function(){
+
+            },
         }
-    });
-
+    })
 }

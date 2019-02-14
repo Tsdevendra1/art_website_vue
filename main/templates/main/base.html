@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+{#    <meta charset="UTF-8">#}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} - Stop Motion Tom</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -26,13 +27,19 @@
 
 </head>
 <body>
+
 {% include 'main/nav_bar.html' %}
-{% block content %}
-{% endblock %}
+
+<div style="margin-top: 117px;">
+    {% block content %}
+    {% endblock %}
+</div>
 
 
 {% block document_ready_script %}
 {% endblock %}
+
+{% include 'main/footer.html' %}
 
 </body>
 </html>

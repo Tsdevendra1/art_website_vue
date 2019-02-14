@@ -16,8 +16,11 @@ class Project(models.Model):
     )
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='main/images/thumbnails/', help_text='This will be the thumbnail for the project',
+    thumbnail = models.ImageField(upload_to='main/images/thumbnails/',
+                                  help_text='This will be the thumbnail for the project',
                                   blank=True, null=True)
+    banner = models.ImageField(upload_to='main/images/banners/', help_text='This will be the banner for the project',
+                               blank=True, null=True)
     video = models.FileField(upload_to='main/videos/', help_text='This is the main video for the project', blank=True,
                              null=True)
     project_type = models.CharField(max_length=13, choices=PROJECT_TYPES, default=GENERAL)
