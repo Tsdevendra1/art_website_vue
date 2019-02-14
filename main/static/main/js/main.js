@@ -231,6 +231,22 @@ function exhibitionsPage() {
 function genericContentPage() {
     new Vue({
         el: '#app',
+        mounted: function () {
+            let imagesOnPage = document.getElementsByClassName('image-class');
+            for (let i = 0; i < imagesOnPage.length; i++) {
+                imagesOnPage[i].id = `image-${i}`;
+                if (i === 0) {
+                    imagesOnPage[i].setAttribute('data-prev_image_id', `image-${imagesOnPage.length - 1}`);
+                    imagesOnPage[i].setAttribute('data-next_image_id', `image-${i + 1}`);
+                } else if (i === imagesOnPage.length - 1) {
+                    imagesOnPage[i].setAttribute('data-prev_image_id', `image-${i - 1}`);
+                    imagesOnPage[i].setAttribute('data-next_image_id', `image-${0}`);
+                } else {
+                    imagesOnPage[i].setAttribute('data-prev_image_id', `image-${i - 1}`);
+                    imagesOnPage[i].setAttribute('data-next_image_id', `image-${i + 1}`);
+                }
+            }
+        },
         data: function () {
             return {}
         },
@@ -246,21 +262,40 @@ function genericContentPage() {
 
                 // Set the src for the image
                 imageViewer.src = event.target.src;
+                imageViewer.setAttribute('data-current_image_id', event.target.id);
 
             },
             closeButton: function () {
                 let imageViewerItems = document.getElementsByClassName('image-viewer-package');
-                for (let item of imageViewerItems){
+                for (let item of imageViewerItems) {
                     item.style.display = 'none';
                 }
                 let imageViewer = document.getElementsByClassName('image-viewer')[0];
                 imageViewer.src = "";
             },
-            leftArrow: function (){
+            leftArrow: function (event) {
+                let imageViewer = document.getElementsByClassName('image-viewer')[0];
+                // Need current image to access it's attributes
+                let currentImage = document.getElementById(imageViewer.getAttribute('data-current_image_id'));
 
+                // Get previous image from current image attribute
+                let prevImage = document.getElementById(currentImage.getAttribute('data-prev_image_id'));
+
+                // Set the source
+                imageViewer.src = prevImage.src;
+                imageViewer.setAttribute('data-current_image_id', prevImage.id);
             },
-            rightArrow: function(){
+            rightArrow: function (event) {
+                let imageViewer = document.getElementsByClassName('image-viewer')[0];
+                // Need current image to access it's attributes
+                let currentImage = document.getElementById(imageViewer.getAttribute('data-current_image_id'));
 
+                // Get previous image from current image attribute
+                let nextImage = document.getElementById(currentImage.getAttribute('data-next_image_id'));
+
+                // Set the source
+                imageViewer.src = nextImage.src;
+                imageViewer.setAttribute('data-current_image_id', nextImage.id);
             },
         }
     })

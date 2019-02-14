@@ -570,7 +570,7 @@ html, body {
 }
 
 .image-viewer-package {
-    /*display: none;*/
+    display: none;
 }
 
 .image-viewer-background {

@@ -85,7 +85,7 @@
                                 <div class="row mt-4" style="justify-content: flex-start;">{% endif %}
                         {#                <div class="col">#}
                         <img @click="showImage"
-                             class="{% if not forloop.counter|divisibleby:5 %}mr-1{% endif %} cursor-class" width="220"
+                             class="image-class {% if not forloop.counter|divisibleby:5 %}mr-1{% endif %} cursor-class" width="220"
                              height="196"
                              src="{{ image.picture.url }}">
                         {#                </div>#}
