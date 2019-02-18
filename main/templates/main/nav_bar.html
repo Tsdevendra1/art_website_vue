@@ -10,16 +10,34 @@
         </div>
     </div>
     <nav id="main-nav">
-        <a class="{% if request.resolver_match.url_name == "home" %}active-nav{% endif %} nav-item"
+        <a class="{% if request.resolver_match.url_name == "home" %}active-nav{% endif %} nav-item main-nav-item"
            href="{% url 'home' %}">HOME</a>
-        <a class="{% if request.resolver_match.url_name == "work-collection" or request.resolver_match.url_name == "single-animation-page" %}active-nav{% endif %} nav-item"
+        <a class="main-nav-item {% if request.resolver_match.url_name == "work-collection" or request.resolver_match.url_name == "single-animation-page" %}active-nav{% endif %} nav-item"
            href="{% url 'work-collection' %}">ANIMATIONS</a>
-        <a class="{% if request.resolver_match.url_name == "exhibitions" or request.resolver_match.url_name == "single-exhibition-page" %}active-nav{% endif %} nav-item"
+        <a class="main-nav-item {% if request.resolver_match.url_name == "exhibitions" or request.resolver_match.url_name == "single-exhibition-page" %}active-nav{% endif %} nav-item"
            href="{% url 'exhibitions' %}">EXHIBITIONS</a>
-        <a class="nav-item" href="#">SKETCHBOOK</a>
-        <a class="nav-item" href="#">TEACHING</a>
-        <a class="nav-item" href="#">CONTACT</a>
+        <a class="main-nav-item nav-item" href="#">SKETCHBOOK</a>
+        <a class="main-nav-item nav-item" href="#">TEACHING</a>
+        <a class="main-nav-item nav-item" href="#">CONTACT</a>
+        <i @click="showMobileMenu" class="mobile-nav-icon nav-item fas fa-bars"></i>
     </nav>
+    <div class="mobile-nav">
+        <div class="container-fluid">
+            <div class="row mobile-menu-row">
+                <a class="{% if request.resolver_match.url_name == "home" %}active-nav{% endif %} nav-item mobile-nav-item"
+                   href="{% url 'home' %}">HOME</a>
+            </div>
+            <div class="row mobile-menu-row">
+                <a class="mobile-nav-item {% if request.resolver_match.url_name == "work-collection" or request.resolver_match.url_name == "single-animation-page" %}active-nav{% endif %} nav-item"
+                   href="{% url 'work-collection' %}">ANIMATIONS</a>
+            </div>
+            <div class="row mobile-menu-row">
+                <a class="mobile-nav-item {% if request.resolver_match.url_name == "exhibitions" or request.resolver_match.url_name == "single-exhibition-page" %}active-nav{% endif %} nav-item"
+                   href="{% url 'exhibitions' %}">EXHIBITIONS</a>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script>

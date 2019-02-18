@@ -8,7 +8,7 @@
     <style>
         html, body {
             height: 100%;
-            {#background: #e9e9e9;#}
+        {#background: #e9e9e9;#}
         }
     </style>
 {% endblock %}
@@ -23,16 +23,17 @@
 
                 {% for project in project_list %}
                     {% if forloop.first %}
-                        <div class="row mt-4" style="justify-content: flex-start;">{% endif %}
-                <div class="col col-flex-left">
+                        <div class="row">
+                    {% endif %}
+                <div class="col-md-6 col-12 exhibition-page-col">
                     <exhibition-post class="exhibition" exhibition_title="{{ project.title }}"
                                      month="{{ project.date_field|date:'F' }}"
                                      year="{{ project.date_field|date:'Y' }}"
                                      individual_post_url="{% url 'single-exhibition-page' pk=project.pk %}"
                                      thumbnail_image_path="{{ project.thumbnail.url }}"></exhibition-post>
                 </div>
-                {% if forloop.counter|divisibleby:3 %}</div>
-                    <div class="row mt-5">{% endif %}
+                {% if forloop.counter|divisibleby:4 %}</div>
+                    <div class="row">{% endif %}
                 {% if forloop.last %}</div>{% endif %}
                 {% endfor %}
             </div>

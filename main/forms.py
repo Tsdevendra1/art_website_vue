@@ -13,7 +13,7 @@ class ProjectForm(forms.ModelForm):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['picture']
+        fields = ['picture', 'low_res_picture']
 
 
 ImageFormset = formset_factory(ImageForm, extra=0, min_num=1)

@@ -36,7 +36,18 @@ def get_image_filename(instance, filename):
     return "main/images/{}-{}".format(slug, filename)
 
 
+def get_low_res_image_filename(instance, filename):
+    title = instance.project.title
+    slug = slugify(title)
+    return "main/images/lowres/{}-{}".format(slug, filename)
+
+
 class Image(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to=get_image_filename,
                                 verbose_name='Picture', help_text='This will be displayed on the product page')
+    low_res_picture = models.ImageField(upload_to=get_low_res_image_filename,
+                                        blank=True,
+                                        null=True,
+                                        verbose_name='Low Res Picture',
+                                        help_text='Please provide an low res version of the picture')

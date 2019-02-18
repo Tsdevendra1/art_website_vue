@@ -9,7 +9,7 @@
 
 
     <div style="margin-top: 220px;" class="standard-position" id="app">
-{#        <h5 class="animation-page-header mt-5" style="">Animations</h5>#}
+        {#        <h5 class="animation-page-header mt-5" style="">Animations</h5>#}
         <div class="video-player-package video-player-background">
             <i @click="closeButton" class="video-player-package close-button fas fa-times"></i>
             <video height="360" width="640" class="video-player-package video-player" autoplay controls>
@@ -22,16 +22,16 @@
 
                 {% for project in project_list %}
                     {% if forloop.first %}
-                        <div class="row mt-4">{% endif %}
-                <div class="col col-flex">
-                    <animation-project class="project"  project_title="{{ project.title }}"
+                        <div class="row">{% endif %}
+                <div class="col-lg-6 col-12 {% if forloop.counter|divisibleby:2 %}col-flex-start{% else %}col-flex-end{% endif %}">
+                    <animation-project class="project" project_title="{{ project.title }}"
                                        image_path="{{ project.thumbnail.url }}"
                                        images_page_url="{% url 'single-animation-page' pk=project.pk %}"
                                        description="{{ project.description }}"
                                        video_path="{{ project.video.url }}"></animation-project>
                 </div>
                 {% if forloop.counter|divisibleby:2 %}</div>
-                    <div class="row" style="margin-top: 115px;">{% endif %}
+                    <div class="row" style="margin-bottom: 2rem;">{% endif %}
                 {% if forloop.last %}</div>{% endif %}
                 {% endfor %}
             </div>

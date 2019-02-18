@@ -1,11 +1,57 @@
 "use strict";
 
 function homePage() {
+
+    // Set video height on the fly so that it fits exactly the rest of the viewport
+    // Element Height = Viewport height - element.offset.top - desired bottom margin
+    let homeVideoContainer = document.getElementById('home-video-container');
+    let miniNav = document.getElementsByClassName('mini-nav')[0];
+    let mainNav = document.getElementById('main-nav');
+    let combinedHeight = (miniNav.offsetHeight + mainNav.offsetHeight) - 1;
+    homeVideoContainer.style.top = `${combinedHeight}px`;
+
     let homeVideo = document.getElementById('home-video');
     homeVideo.play();
+    let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    homeVideo.style.height = `${viewportHeight - combinedHeight}px`;
+    console.log(viewportHeight - combinedHeight);
 }
 
 function navBar() {
+    new Vue({
+        el: '#nav-app',
+        data: function () {
+            return {}
+        },
+        methods: {
+            showMobileMenu: function () {
+                let menuElement = document.getElementsByClassName('mobile-nav')[0];
+                if (menuElement.style.height !== '100%') {
+                    menuElement.style.height = '100%';
+                } else {
+                    menuElement.style.height = '0';
+                }
+
+            }
+        }
+    });
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+        let currentScrollPos = window.pageYOffset;
+        let mobileMenuElement = document.getElementsByClassName('mobile-nav')[0];
+        let mainNav = document.getElementById('main-nav');
+        if (prevScrollpos > currentScrollPos) {
+            mainNav.style.transition = '0.1s';
+            mainNav.style.top = "3.1rem";
+        } else {
+            // Menu shouldn't dissapear if the mobilemenu is open
+            if (mobileMenuElement.style.height !== '100%') {
+                mainNav.style.transition = '0.7s';
+                mainNav.style.top = "-6.1rem";
+            }
+        }
+        prevScrollpos = currentScrollPos;
+    }
 }
 
 function isOverflown(element) {
@@ -204,9 +250,9 @@ function exhibitionsPage() {
         template: `
             <a :href="individual_post_url">
                 <div class="card exhibition-card">
-                    <img width="484" height="230"
-                         style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
-                         class="card-img-top" :src="thumbnail_image_path" alt="Card image cap">
+                    <img
+                            style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
+                            class="card-img-top" :src="thumbnail_image_path" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="exhibition-title"><b>{{ exhibition_title }}</b></h5>
                     </div>
@@ -246,6 +292,9 @@ function genericContentPage() {
                     imagesOnPage[i].setAttribute('data-next_image_id', `image-${i + 1}`);
                 }
             }
+
+            let totalImageAmount = document.getElementById('total-image-num');
+            totalImageAmount.innerText = `${imagesOnPage.length}`;
         },
         data: function () {
             return {}
@@ -264,6 +313,19 @@ function genericContentPage() {
                 imageViewer.src = event.target.src;
                 imageViewer.setAttribute('data-current_image_id', event.target.id);
 
+                // Set which image is being currently viewed
+                let currentImageNum = parseInt(event.target.id.replace(/[^\d.]/g, '')) + 1;
+                let currentImageNumMarker = document.getElementById('current-image-num');
+                currentImageNumMarker.innerText = `${currentImageNum}`;
+
+
+                // // Prevent scrolling
+                // let body = document.getElementsByTagName('body')[0];
+                // body.classList.add('no-scroll-body');
+                // let html = document.getElementsByTagName('html')[0];
+                // html.classList.add('no-scroll-html');
+
+
             },
             closeButton: function () {
                 let imageViewerItems = document.getElementsByClassName('image-viewer-package');
@@ -272,8 +334,14 @@ function genericContentPage() {
                 }
                 let imageViewer = document.getElementsByClassName('image-viewer')[0];
                 imageViewer.src = "";
+
+                // // Allow scrolling
+                // let body = document.getElementsByTagName('body')[0];
+                // body.classList.remove('no-scroll-body');
+                // let html = document.getElementsByTagName('html')[0];
+                // html.classList.remove('no-scroll-html');
             },
-            leftArrow: function (event) {
+            leftArrow: function () {
                 let imageViewer = document.getElementsByClassName('image-viewer')[0];
                 // Need current image to access it's attributes
                 let currentImage = document.getElementById(imageViewer.getAttribute('data-current_image_id'));
@@ -284,8 +352,13 @@ function genericContentPage() {
                 // Set the source
                 imageViewer.src = prevImage.src;
                 imageViewer.setAttribute('data-current_image_id', prevImage.id);
+
+                // Set which image is being currently viewed
+                let currentImageNum = parseInt(prevImage.id.replace(/[^\d.]/g, '')) + 1;
+                let currentImageNumMarker = document.getElementById('current-image-num');
+                currentImageNumMarker.innerText = `${currentImageNum}`;
             },
-            rightArrow: function (event) {
+            rightArrow: function () {
                 let imageViewer = document.getElementsByClassName('image-viewer')[0];
                 // Need current image to access it's attributes
                 let currentImage = document.getElementById(imageViewer.getAttribute('data-current_image_id'));
@@ -296,7 +369,31 @@ function genericContentPage() {
                 // Set the source
                 imageViewer.src = nextImage.src;
                 imageViewer.setAttribute('data-current_image_id', nextImage.id);
+                // Set which image is being currently viewed
+                let currentImageNum = parseInt(nextImage.id.replace(/[^\d.]/g, '')) + 1;
+                let currentImageNumMarker = document.getElementById('current-image-num');
+                currentImageNumMarker.innerText = `${currentImageNum}`;
             },
         }
-    })
+    });
+
+    // Add smooth scrolling to all links
+    $("a").on('click', function (event) {
+
+        // Make sure this.hash has a value before overriding default behavior
+        if (this.hash !== "") {
+            // Prevent default anchor click behavior
+            event.preventDefault();
+
+            // Store hash
+            let hash = this.hash;
+
+            // Using jQuery's animate() method to add smooth page scroll
+            // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+            $('html, body').animate({
+                scrollTop: "400px"
+            }, 800, function () {
+            });
+        } // End if
+    });
 }

@@ -7,66 +7,46 @@
 
 {% block custom_style %}
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-    {#    <div class="container mt-5" style="width: 100%; max-width: none;">#}
-    {#        <div class="row" style="background: white;">#}
-    {#            <div class="col col-flex mt-3">#}
-    {#                <h2 style="text-transform: uppercase"><b>{{ object.title }}</b></h2>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#        <div class="row" style="margin-top: 60px; background: #f9f9f9;">#}
-    {#            <div class="col-4 mt-4" style="margin-left: 70px;">#}
-    {#                <p style="font-size:20px;">{{ object.description }}</p>#}
-    {#            </div>#}
-    {#            <div class="col-7 mt-4">#}
-    {#                    <video width="750" height="430" controls>#}
-    {#                        <source src="{{ object.video.url }}" type="video/mp4">#}
-    {#                    </video>#}
-    {#            </div>#}
-    {#        </div>#}
-    {##}
-    {#        <div class="row pt-5 col-flex" style="background: #ededed;">#}
-    {#            <h3>A few behind the scenes stills...</h3>#}
-    {#        </div>#}
-    {#        <div class="row pt-5" style="background: #ededed;">#}
-    {#            <div class="col" style="display: flex; justify-content: center;">#}
-    {#                <div class="image-wrapper" style="display:inline-block;">#}
-    {#                    {% for image in object.image_set.all %}#}
-    {#                        <img width="286" height="196" src="{{ image.picture.url }}">#}
-    {#                    {% endfor %}#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
     <div id="app">
 
         <div class="image-viewer-package image-viewer-background">
+            <div class="image-viewer-package black-background-image"></div>
+            <div class="image-viewer-package current-image-container"><i class="fas fa-camera"></i><span style="margin-left: 2rem;" id="current-image-num">1</span>/<span id="total-image-num">3</span></div>
             <i @click="closeButton" class="image-viewer-package close-button fas fa-times"></i>
-            <i @click="leftArrow" class="image-viewer-package left-arrow fas fa-chevron-left"></i>
-            <i @click="rightArrow" class="image-viewer-package right-arrow fas fa-chevron-right"></i>
-            <img class="image-viewer-package image-viewer" width="640" height="360" src="{% static 'main/images/Untitled.jpg' %}">
+            <i @click="leftArrow" class="circle-background image-viewer-package left-arrow fas fa-chevron-left"></i>
+            <i @click="rightArrow" class="circle-background image-viewer-package right-arrow fas fa-chevron-right"></i>
+            <img class="image-viewer-package image-viewer"
+                 src="{% static 'main/images/Untitled.jpg' %}">
         </div>
 
         <div class="container-for-image">
             <img class="animation-page-image" src="{% static 'main/images/banner 1.jpg' %}">
-            <div class="center-image-text">Exhibitions</div>
+            <div class="center-image-text">{% if request.resolver_match.url_name == 'single-animation-page' %}
+                Animations{% else %}Exhibitions{% endif %}</div>
+            <a href="#section1"><i class="center-icon fas fa-chevron-down"></i></a>
         </div>
         <div class="container-fluid">
-            <div class="row col-flex pt-5 pb-5">
-                <h1><b>{{ object.title }}</b></h1>
+            <div class="row col-flex pt-5 pb-5 generic-row">
+                <h1 class="generic-page-header"><b>{{ object.title }}<span class="square-fullstop">&#9632;</span></b>
+                </h1>
             </div>
-            <div class="row pt-5 pb-5" style="background: #f9f9f9">
+            <div class="row pt-5 pb-5 generic-row-content">
                 <div class="col generic-page-col">
                     <div class="row">
-                        <div class="col-4">
-                            <p class="generic-page-description">{{ object.description }}</p>
+                        <div class="col-12 col-lg-4">
+                            <div class="generic-page-description">{{ object.description|linebreaks }}</div>
                         </div>
-                        <div class="col-8" style="margin-top: -10px;">
-                            <video style="object-fit: cover" poster="{{ object.thumbnail.url }}" width="716"
-                                   height="430"
+                        <div class="col-12 col-lg-8" style="margin-top: 6px;">
+                            <video poster="{{ object.thumbnail.url }}" width="716"
+                                   class="generic-content-video"
+                                   preload="none"
                                    controls>
                                 <source src="{{ object.video.url }}" type="video/mp4">
                             </video>
@@ -75,21 +55,21 @@
                 </div>
             </div>
             {% if object.image_set.all %}
-                <div class="row col-flex pt-5 pb-4" style="background:#ededed;">
-                    <h2><b>A few behind the scene stills...</b></h2>
+                <div class="row col-flex pt-5 pb-4" style="background:#ededed; position: relative">
+                    {#                    <div class="arrow-down"></div>#}
+                    <h2 class="image-marker"><b class="generic-images-title">A few behind the scene stills...</b></h2>
                 </div>
                 <div class="row pb-5" style="background:#ededed;">
                     <div class="col generic-page-col">
                         {% for image in object.image_set.all %}
                             {% if forloop.first %}
                                 <div class="row mt-4" style="justify-content: flex-start;">{% endif %}
-                        {#                <div class="col">#}
-                        <img @click="showImage"
-                             class="image-class {% if not forloop.counter|divisibleby:5 %}mr-1{% endif %} cursor-class" width="220"
-                             height="196"
-                             src="{{ image.picture.url }}">
-                        {#                </div>#}
-                        {% if forloop.counter|divisibleby:5 %}</div>
+                        <div class="col-lg-3 col-6 generic-image-columns">
+                            <img @click="showImage"
+                                 class="image-class {% if not forloop.counter|divisibleby:5 %}mr-1{% endif %} cursor-class"
+                                 src="{{ image.picture.url }}">
+                        </div>
+                        {% if forloop.counter|divisibleby:4 %}</div>
                             <div class="row mt-1">{% endif %}
                         {% if forloop.last %}</div>{% endif %}
                         {% endfor %}
@@ -97,6 +77,7 @@
                 </div>
             {% endif %}
         </div>
+
     </div>
 
 {% endblock %}
