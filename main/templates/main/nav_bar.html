@@ -16,7 +16,8 @@
            href="{% url 'work-collection' %}">ANIMATIONS</a>
         <a class="main-nav-item {% if request.resolver_match.url_name == "exhibitions" or request.resolver_match.url_name == "single-exhibition-page" %}active-nav{% endif %} nav-item"
            href="{% url 'exhibitions' %}">EXHIBITIONS</a>
-        <a class="main-nav-item nav-item" href="#">SKETCHBOOK</a>
+        <a class="main-nav-item nav-item {% if request.resolver_match.url_name == "sketchbook" %}active-nav{% endif %}"
+           href="{% url 'sketchbook' %}">SKETCHBOOK</a>
         <a class="main-nav-item nav-item" href="#">TEACHING</a>
         <a class="main-nav-item nav-item" href="#">CONTACT</a>
         <i @click="showMobileMenu" class="mobile-nav-icon nav-item fas fa-bars"></i>
@@ -34,6 +35,10 @@
             <div class="row mobile-menu-row">
                 <a class="mobile-nav-item {% if request.resolver_match.url_name == "exhibitions" or request.resolver_match.url_name == "single-exhibition-page" %}active-nav{% endif %} nav-item"
                    href="{% url 'exhibitions' %}">EXHIBITIONS</a>
+            </div>
+            <div class="row mobile-menu-row">
+                <a class="mobile-nav-item nav-item {% if request.resolver_match.url_name == "sketchbook" %}active-nav{% endif %}"
+                   href="{% url 'sketchbook' %}">SKETCHBOOK</a>
             </div>
 
         </div>

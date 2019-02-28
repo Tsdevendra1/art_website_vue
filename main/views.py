@@ -97,3 +97,11 @@ class ExhibitionPageView(DetailView):
 
     def get_queryset(self):
         return Project.objects.filter(project_type=GENERAL)
+
+
+class SketchbookPageView(ListView):
+    template_name = 'main/sketchbook_page.html'
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(project_type=SKETCHBOOK)

@@ -1,44 +1,60 @@
-{% extends 'main/base.html' %}
+{#{% extends 'main/base.html' %}#}
+{##}
+{#{% block title %}#}
+{#    Exhibitions#}
+{#{% endblock %}#}
+{##}
+{#{% block custom_style %}#}
+{#    <style>#}
+{#        html, body {#}
+{#            height: 100%;#}
+{#        background: #e9e9e9;#}
+{#        }#}
+{#    </style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{##}
+{#    <div class="standard-position" id="app">#}
+        {#        <h5 class="animation-page-header mt-5" style="">Exhibitions</h5>#}
+{##}
+{#        <div class="mt-5 mb-5">#}
+{#            <div class="container">#}
+{##}
+{#                {% for project in project_list %}#}
+{#                    {% if forloop.first %}#}
+{#                        <div class="row">#}
+{#                    {% endif %}#}
+{#                <div class="col-md-6 col-12 exhibition-page-col">#}
+{#                    <exhibition-post class="exhibition" exhibition_title="{{ project.title }}"#}
+{#                                     month="{{ project.date_field|date:'F' }}"#}
+{#                                     year="{{ project.date_field|date:'Y' }}"#}
+{#                                     individual_post_url="{% url 'single-exhibition-page' pk=project.pk %}"#}
+{#                                     thumbnail_image_path="{{ project.thumbnail.url }}"></exhibition-post>#}
+{#                </div>#}
+{#                {% if forloop.counter|divisibleby:4 %}</div>#}
+{#                    <div class="row">{% endif %}#}
+{#                {% if forloop.last %}</div>{% endif %}#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+{##}
+{% extends 'main/generic_card_page.html' %}
 
 {% block title %}
     Exhibitions
 {% endblock %}
 
-{% block custom_style %}
-    <style>
-        html, body {
-            height: 100%;
-        {#background: #e9e9e9;#}
-        }
-    </style>
-{% endblock %}
 
-{% block content %}
+{% block card %}
+    <exhibition-post class="exhibition" exhibition_title="{{ project.title }}"
+                     month="{{ project.date_field|date:'F' }}"
+                     year="{{ project.date_field|date:'Y' }}"
+                     individual_post_url="{% url 'single-exhibition-page' pk=project.pk %}"
+                     thumbnail_image_path="{{ project.thumbnail.url }}"></exhibition-post>
 
-    <div class="standard-position" id="app">
-        {#        <h5 class="animation-page-header mt-5" style="">Exhibitions</h5>#}
-
-        <div class="mt-5 mb-5">
-            <div class="container">
-
-                {% for project in project_list %}
-                    {% if forloop.first %}
-                        <div class="row">
-                    {% endif %}
-                <div class="col-md-6 col-12 exhibition-page-col">
-                    <exhibition-post class="exhibition" exhibition_title="{{ project.title }}"
-                                     month="{{ project.date_field|date:'F' }}"
-                                     year="{{ project.date_field|date:'Y' }}"
-                                     individual_post_url="{% url 'single-exhibition-page' pk=project.pk %}"
-                                     thumbnail_image_path="{{ project.thumbnail.url }}"></exhibition-post>
-                </div>
-                {% if forloop.counter|divisibleby:4 %}</div>
-                    <div class="row">{% endif %}
-                {% if forloop.last %}</div>{% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block document_ready_script %}

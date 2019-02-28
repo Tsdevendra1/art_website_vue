@@ -7,14 +7,15 @@ function homePage() {
     let homeVideoContainer = document.getElementById('home-video-container');
     let miniNav = document.getElementsByClassName('mini-nav')[0];
     let mainNav = document.getElementById('main-nav');
+    // Minus one because of 1px difference between chrome and firefox
     let combinedHeight = (miniNav.offsetHeight + mainNav.offsetHeight) - 1;
     homeVideoContainer.style.top = `${combinedHeight}px`;
 
     let homeVideo = document.getElementById('home-video');
     homeVideo.play();
     let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    // Set the video height so that it fills the rest of the screen
     homeVideo.style.height = `${viewportHeight - combinedHeight}px`;
-    console.log(viewportHeight - combinedHeight);
 }
 
 function navBar() {
@@ -54,9 +55,6 @@ function navBar() {
     }
 }
 
-function isOverflown(element) {
-    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-}
 
 function workPage() {
     Vue.component('animation-project', {
@@ -127,39 +125,27 @@ function workPage() {
             <div class="card project-card">
                 <div @click="showVideo" class="cursor-class project-image">
                     <div class="container-for-image">
-                        <img width="484" height="270"
-                             style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
-                             class="card-img-top card-image" :src="image_path" alt="Card image cap">
+                        <img
+                                style="-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;"
+                                class="card-img-top card-image" :src="image_path" alt="Card image cap">
+                        <div class="striped-background" @mouseover="scalePicture" @mouseleave="originalPicture"></div>
                         <div @mouseover="scalePicture" @mouseleave="originalPicture" class="center-image-text-small">
-                            <!--<b class="uppercase">{{ project_title }}</b>-->
                             <i class="fas fa-play"></i>
                         </div>
                     </div>
                 </div>
                 <div class="card-body project-title">
-                    <h5 class=""><b>{{ project_title }}</b></h5>
-                    <!--<i class="far fa-folder-open"></i>&nbsp <a v-if="images_page_url" :href="images_page_url" class="card-link">Animation-->
-                    <!--Stills</a>,-->
-                    <!--<a-->
-                    <!--style="margin-left:0px;" href="#"-->
-                    <!--class="card-link">Behind The Scenes-->
-                    <!--</a>-->
+                    <h5 class=""><b class="project-title-font">{{ project_title }}</b></h5>
                 </div>
                 <div class="card-body body-text-class">
-                    <i class="far fa-folder-open"></i>&nbsp <a v-if="images_page_url" :href="images_page_url"
-                                                               class="card-link">Animation
-                    Stills</a>,
+                    <i class="far fa-folder-open"></i>&nbsp
+                    <a v-if="images_page_url" :href="images_page_url"
+                       class="card-link">Animation
+                        Stills</a>,
                     <a
                             style="margin-left:0px;" href="#"
                             class="card-link">Behind The Scenes
                     </a>
-                    <!--<h5 class="card-title"><b>{{ project_title }}</b></h5>-->
-                    <!--<div class="measuring-wrapper">-->
-                    <!--<div class="text description-text">-->
-                    <!--<p class="card-text">{{ description }}</p>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<input v-if="this.readMore" type="button" @click="showMore" value="Read more" class="more-button">-->
                 </div>
             </div>
         `
@@ -396,4 +382,30 @@ function genericContentPage() {
             });
         } // End if
     });
+}
+
+function sketchbookPage() {
+
+}
+
+function footerFunction() {
+    new Vue({
+        el: '#footer-app',
+        data: function () {
+            return {}
+        },
+        mounted: function () {
+            this.keepFooterAtBottom();
+        },
+        methods: {
+            keepFooterAtBottom: function () {
+                // Method to push the footer all the way to the bottom of the page
+                let footer = document.getElementsByClassName('footer')[0];
+                let footerPosition = footer.getBoundingClientRect();
+                let body = document.getElementsByTagName('body')[0];
+                let bodyPosition = body.getBoundingClientRect();
+                footer.style.bottom = `-${bodyPosition.bottom - footerPosition.bottom}px`
+            }
+        }
+    })
 }
