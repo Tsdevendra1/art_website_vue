@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block custom_style %}
+{% endblock %}
+
+{% block content %}
+    <div class="container standard-position mb-4" id="app" style="max-width: 700px;">
+        <img class="contact-image" src="{% static 'main/images/Untitled.jpg' %}">
+        <p>
+            I am a Stop Motion Animator and Illustrator, recently completed studying an MA in Illustration at Cardiff
+            Metropolitan University. My work revolves around the creation of an environment and cinematography –
+            lighting and composition – communicating stories within these environments. I am currently open for work,
+            teaching and collaborations so get in touch if you want workshops or make a film!
+        </p>
+        <p>Email me at Tommargett@gmail.com, @stopmotion_tom on Instagram and Twitter or find me on Facebook as Stop
+            Motion Tom (alternatively fill in the form below).</p>
+        <form method="post" action="https://formspree.io/TomMargett@Gmail.com">
+            {% csrf_token %}
+            {% include 'main/generic_form_template.html' with form=form %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block document_ready_script %}
+    <script>
+        contagePage();
+    </script>
+{% endblock %}

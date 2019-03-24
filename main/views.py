@@ -9,10 +9,12 @@ from django.views import View
 from django.views.generic import TemplateView, FormView, CreateView, ListView, UpdateView, DeleteView, DetailView
 
 # Create your views here.
-from main.forms import ImageFormset, ProjectForm
+from main.forms import ImageFormset, ProjectForm, ContactForm
 from main.models import Project
 
 # Project types
+from main.tasks import celery_send_email
+
 GENERAL = 'General'
 SKETCHBOOK = 'Sketchbook'
 EXHIBITION = 'Exhibition'
@@ -105,3 +107,32 @@ class SketchbookPageView(ListView):
 
     def get_queryset(self):
         return Project.objects.filter(project_type=SKETCHBOOK)
+
+
+class TeachingListView(ListView):
+    template_name = 'main/all_teachings_page.html'
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(project_type=GENERAL)
+
+
+class TeachingPageView(DetailView):
+    template_name = 'main/generic_content_page.html'
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(project_type=GENERAL)
+
+
+class ContactPage(TemplateView):
+    """
+    This has to be a template view, instead of form view, because of how the page works after form submission (I think)
+    """
+    template_name = 'main/contact_page.html'
+    success_url = reverse_lazy('contact')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ContactForm
+        return context

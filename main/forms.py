@@ -17,3 +17,12 @@ class ImageForm(forms.ModelForm):
 
 
 ImageFormset = formset_factory(ImageForm, extra=0, min_num=1)
+
+
+class ContactForm(forms.Form):
+    contact_name = forms.CharField(required=True)
+    contact_email = forms.EmailField(required=True)
+    comment = forms.CharField(
+        required=True,
+        widget=forms.Textarea
+    )

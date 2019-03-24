@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+    <div class="standard-position" id="app">
+        {#        <h5 class="animation-page-header mt-5" style="">Exhibitions</h5>#}
+        {% block video_player %}
+        {% endblock %}
+
+        <div class="mt-5 mb-5">
+            <div class="container">
+
+                {% for project in project_list %}
+                    {% if forloop.first %}
+                        <div class="row">
+                    {% endif %}
+                <div class="col-md-6 col-12 exhibition-page-col">
+                    {% block card %}
+                    {% endblock %}
+                </div>
+                {% if forloop.counter|divisibleby:4 %}</div>
+                    <div class="row">{% endif %}
+                {% if forloop.last %}</div>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -221,11 +221,12 @@ function addProjectPage() {
 function individualProjectPage() {
 }
 
-function exhibitionsPage() {
-    Vue.component('exhibition-post', {
+function genericCardPage() {
+    Vue.component('card-post', {
         props: ['month', 'year', 'exhibition_title', 'thumbnail_image_path', 'individual_post_url'],
         data: function () {
             return {
+                // Shortened version of which month it is. (i.e. January => Jan)
                 monthShort: this.month.slice(0, 3)
             }
         },
@@ -242,7 +243,7 @@ function exhibitionsPage() {
                     <div class="card-body">
                         <h5 class="exhibition-title"><b>{{ exhibition_title }}</b></h5>
                     </div>
-                    <div class="exhibition-footer">
+                    <div v-if="this.monthShort" class="exhibition-footer">
                         By <span class="color-orange">Tom Margett</span> <b>&middot;</b> <span
                             style="color: lightgrey">{{ this.monthShort }} {{ year }}</span>
                     </div>
@@ -407,5 +408,25 @@ function footerFunction() {
                 footer.style.bottom = `-${bodyPosition.bottom - footerPosition.bottom}px`
             }
         }
+    })
+}
+
+function teachingPage() {
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {}
+        },
+        methods: {},
+    })
+}
+
+function contagePage(){
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {}
+        },
+        methods: {},
     })
 }

@@ -18,8 +18,8 @@
            href="{% url 'exhibitions' %}">EXHIBITIONS</a>
         <a class="main-nav-item nav-item {% if request.resolver_match.url_name == "sketchbook" %}active-nav{% endif %}"
            href="{% url 'sketchbook' %}">SKETCHBOOK</a>
-        <a class="main-nav-item nav-item" href="#">TEACHING</a>
-        <a class="main-nav-item nav-item" href="#">CONTACT</a>
+        <a class="main-nav-item nav-item {% if request.resolver_match.url_name == "teachings" %}active-nav{% endif %}" href="{% url 'teachings' %}">TEACHING</a>
+        <a class="main-nav-item nav-item {% if request.resolver_match.url_name == "contact" %}active-nav{% endif %}" href="{% url 'contact' %}">CONTACT</a>
         <i @click="showMobileMenu" class="mobile-nav-icon nav-item fas fa-bars"></i>
     </nav>
     <div class="mobile-nav">
@@ -39,6 +39,12 @@
             <div class="row mobile-menu-row">
                 <a class="mobile-nav-item nav-item {% if request.resolver_match.url_name == "sketchbook" %}active-nav{% endif %}"
                    href="{% url 'sketchbook' %}">SKETCHBOOK</a>
+            </div>
+            <div class="row mobile-menu-row">
+                <a class="mobile-nav-item nav-item {% if request.resolver_match.url_name == "teachings" %}active-nav{% endif %}" href="{% url 'teachings' %}">TEACHING</a>
+            </div>
+            <div class="row mobile-menu-row">
+                <a class="mobile-nav-item nav-item {% if request.resolver_match.url_name == "contact" %}active-nav{% endif %}" href="{% url 'contact' %}">CONTACT</a>
             </div>
 
         </div>
